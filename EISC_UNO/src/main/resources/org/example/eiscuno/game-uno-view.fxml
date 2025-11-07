@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="535.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eiscuno.controller.GameUnoController">
+<AnchorPane prefHeight="535.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eiscuno.controller.GameUnoController">
    <children>
       <ImageView fitHeight="575.0" fitWidth="747.0" layoutY="-26.0">
          <image>
@@ -30,7 +30,7 @@
                      <graphic>
                         <ImageView fx:id="deckImageView" fitHeight="188.0" fitWidth="164.0" preserveRatio="true">
                            <image>
-                              <Image url="@cards-uno/deck_of_cards.png" />
+                              <Image url="@cartas-poker/mazo.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -41,14 +41,7 @@
          <right>
             <Pane prefHeight="194.0" prefWidth="190.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="unoButton" layoutX="-7.0" layoutY="42.0" mnemonicParsing="false" onAction="#onHandleUno" prefHeight="97.0" prefWidth="169.0" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fx:id="unoImageView" fitHeight="106.0" fitWidth="176.0" preserveRatio="true">
-                           <image>
-                              <Image url="@images/UNO_shout.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
+                  <Button fx:id="unoButton" layoutX="-7.0" layoutY="42.0" mnemonicParsing="false" onAction="#onHandleUno" prefHeight="97.0" prefWidth="169.0" style="-fx-background-color: transparent;" />
                </children>
             </Pane>
          </right>
@@ -109,7 +102,7 @@
                   </VBox>
                   <ImageView fitHeight="36.0" fitWidth="57.0" preserveRatio="true">
                      <image>
-                        <Image url="@images/UNO_logo.png" />
+                        <Image url="@images/icono_poker.png" />
                      </image>
                   </ImageView>
                </children>

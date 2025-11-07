@@ -6,73 +6,74 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.example.eiscuno.controller.WelcomeStageController;
+
+import org.example.eiscuno.controller.GameUnoController;
 
 import java.io.IOException;
 
 /**
- * Represents the main stage of the Uno game application.
- * This stage displays the game's main interface to the user.
- * @see Stage
- * @see Scene
- * @see FXMLLoader
+ * Ventana principal del juego UNO.
  */
 public class GameUnoStage extends Stage {
-    /**
-     * Constructs a new instance of GameUnoStage.
-     *
-     * @throws IOException if an error occurs while loading the FXML file for the game interface.
-     */
-    public GameUnoStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/eiscuno/game-uno-view.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            // Re-throwing the caught IOException
-            throw new IOException("Error while loading FXML file", e);
+
+    private static GameUnoStage INSTANCE;
+    private GameUnoController controller;
+
+    /** Constructor privado: carga el FXML y deja el controller listo. */
+    private GameUnoStage() throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/org/example/eiscuno/game-uno-view.fxml"));
+        Parent root = loader.load();
+        this.controller = loader.getController();
+
+        Scene scene = new Scene(root);
+        setTitle("EISC Uno");
+
+        // Icono (opcional si el recurso existe)
+        var iconUrl = getClass().getResource("/org/example/eiscuno/images/icono_poker.png");
+        if (iconUrl != null) {
+            getIcons().add(new Image(String.valueOf(iconUrl)));
         }
 
+        setScene(scene);
+        setResizable(false);
+
         setOnCloseRequest(event -> {
-            Platform.exit(); // shuts down JavaFX runtime
-            System.exit(0);  // kills JVM just in case background threads are alive
+            Platform.exit();
+            System.exit(0);
         });
 
-        Scene scene = new Scene(root); // Configuring the stage
-        setTitle("EISC Uno"); // Sets the title of the stage
-        getIcons().add(
-                new Image(String.valueOf(getClass().getResource("/org/example/eiscuno/favicon.png"))));
-        setScene(scene); // Sets the scene for the stage
-        setResizable(false); // Disallows resizing of the stage
-        show(); // Displays the stage
+        show();
+    }
+
+    /** Obtiene (y si no existe crea) la instancia única. */
+    public static synchronized GameUnoStage getInstance() throws IOException {
+        if (INSTANCE == null) {
+            INSTANCE = new GameUnoStage();
+        }
+        return INSTANCE;
     }
 
     /**
-     * Closes the instance of GameUnoStage.
-     * This method is used to clean up resources when the game stage is no longer needed.
+     * Obtiene la instancia y aplica la cantidad de bots.
+     * Garantiza que el controller no sea null.
      */
-    public static void deleteInstance() {
-        GameUnoStageHolder.INSTANCE.close();
-        GameUnoStageHolder.INSTANCE = null;
+    public static synchronized GameUnoStage getInstance(int numPlayers) throws IOException {
+        GameUnoStage stage = getInstance();
+        stage.controller.setBotsCount(numPlayers);
+        return stage;
     }
 
-    /**
-     * Retrieves the singleton instance of GameUnoStage.
-     *
-     * @return the singleton instance of GameUnoStage.
-     * @throws IOException if an error occurs while creating the instance.
-     */
-    public static GameUnoStage getInstance() throws IOException {
-        return GameUnoStageHolder.INSTANCE != null ?
-                GameUnoStageHolder.INSTANCE :
-                (GameUnoStageHolder.INSTANCE = new GameUnoStage());
+    /** Cierra y limpia la instancia. */
+    public static synchronized void deleteInstance() {
+        if (INSTANCE != null) {
+            INSTANCE.close();
+            INSTANCE = null;
+        }
     }
 
-    /**
-     * Holder class for the singleton instance of GameUnoStage.
-     * This class ensures lazy initialization of the singleton instance.
-     */
-    private static class GameUnoStageHolder {
-        private static GameUnoStage INSTANCE;
+    /** Acceso opcional al controller. */
+    public GameUnoController getController() {
+        return controller;
     }
 }

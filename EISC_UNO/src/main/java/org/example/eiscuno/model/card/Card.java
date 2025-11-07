@@ -7,6 +7,7 @@ import org.example.eiscuno.model.card.cardEffect.ICardEffect;
 import org.example.eiscuno.model.game.GameUno;
 import org.example.eiscuno.model.player.Player;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 /**
@@ -242,10 +243,11 @@ public class Card implements Serializable {
      * @return the image of the card
      */
     public Image getImage() {
-        if (image == null) {
-            this.image = new Image(String.valueOf(getClass().getResource(url)));
-        }
-        return image;
+    
+        String path = "/org/example/eiscuno/cartas-poker"; // ajusta la carpeta real
+        InputStream is = getClass().getResourceAsStream(path);
+        if (is == null) throw new IllegalArgumentException("Image resource not found: " + path);
+        return new Image(is);
     }
 
     /**

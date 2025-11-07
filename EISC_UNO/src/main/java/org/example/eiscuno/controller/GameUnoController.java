@@ -43,6 +43,7 @@ import org.example.eiscuno.view.drawers.ShapeDrawer;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -153,34 +154,32 @@ public class GameUnoController {
         WelcomeStage.deleteInstance();
         serializableFileHandler = new SerializableFileHandler();
         planeTextFileHandler = new PlaneTextFileHandler();
-
+        
         if(!isContinue){
             try {
                 initVariables();
                 this.gameUno.startGame();
+
                 threadPlayMachine = new ThreadPlayMachine(this.table, this.machinePlayer, this.tableImageView, this.gameUno, this.humanPlayer);
                 threadPlayMachine.start();
 
+                // CREA LA MÁQUINA
                 threadSingUnoMachine = new ThreadSingUnoMachine(this.humanPlayer, this.gameUno);
+
+                // pasa el número de bots antes de arrancarla
+                threadSingUnoMachine.setBotsCount(this.botsCount);
+
+                // ahora crea el hilo y arráncalo
                 threadSingUno = new Thread(threadSingUnoMachine);
                 threadSingUno.setDaemon(true);
                 threadSingUno.start();
+
+                // AHORA registra el listener (ya no es null)
+                setUnoListener();
             }catch (Exception e){
                 showError(errorLabel, e.getMessage());
             }
 
-            threadCurrentColorMachine = new ThreadCurrentColorMachine(this.gameUno, this.table);
-            threadCurrentColor = new Thread(threadCurrentColorMachine);
-            threadCurrentColor.setDaemon(true);
-            threadCurrentColor.start();
-
-            setUnoListener();
-            setGameOverListener();
-            setCurrentColorListener();
-
-            setMachineListener();
-            showUnoButton();
-            refreshUI();
 
         }
         else{
@@ -188,6 +187,24 @@ public class GameUnoController {
         }
     }
 
+    /*añadir maquinas */
+   private int botsCount = 1; // por defecto
+
+public void setBotsCount(int numPlayers) {
+    this.botsCount = Math.max(1, numPlayers);
+    // Si la "máquina" ya existe, pásale el número de bots
+    if (threadSingUnoMachine != null) {
+        // usa el método real que tenga tu clase; si no existe, créalo en esa clase
+        threadSingUnoMachine.setBotsCount(this.botsCount);
+    }
+} // <-- ESTA llave cierra setBotsCount
+
+public void setThreadSingUnoMachine(ThreadSingUnoMachine m) {
+    this.threadSingUnoMachine = java.util.Objects.requireNonNull(m, "threadSingUnoMachine null");
+    this.threadSingUnoMachine.setBotsCount(this.botsCount);
+   // this.threadSingUnoMachine.setUnoEventListener(this);
+    
+}    
     /**
      * Initializes the variables for the game.
      */
@@ -350,6 +367,7 @@ public class GameUnoController {
      * 3) The player no longer has one card
      */
     private void setUnoListener(){
+
         threadSingUnoMachine.setUnoEventListener(() -> {
             Platform.runLater(() -> {
                 showUnoButton();
@@ -357,8 +375,8 @@ public class GameUnoController {
                 showError(errorLabel, "¡Olvidaste decir UNO!");
             });
         });
-
     }
+
 
     /**
      * Notifies the controller if the machinePlayer has made a move, including:

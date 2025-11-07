@@ -24,7 +24,7 @@
         <Label style="-fx-text-fill: #fff3e0; -fx-font-size: 24px; -fx-font-weight: bold;" styleClass="welcome-label" />
       <TextField fx:id="usernameField" layoutX="85.0" layoutY="392.0" maxWidth="250" promptText="Type your username" />
 
-        <TextField fx:id="players" maxWidth="250" promptText="Type your username" />
+        <TextField fx:id="playersField" maxWidth="250" promptText="Type players" />
 
         <VBox alignment="CENTER" spacing="10">
             <Button fx:id="playButton" maxWidth="150" onAction="#onHandlePlayButton" styleClass="welcome-button" text="Play" />

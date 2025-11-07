@@ -26,7 +26,9 @@ public class WelcomeStageController {
     @FXML
     private TextField usernameField;
     private String nickName;
+    @FXML
     private String player;
+    @FXML
     private TextField playersField;
     private PlaneTextFileHandler planeTextFileHandler;
     private Boolean isContinue;
@@ -48,14 +50,15 @@ public class WelcomeStageController {
      */
     @FXML
     public void onHandlePlayButton() throws IOException {
-        if(!usernameField.getText().isEmpty()) {
+        if(!usernameField.getText().isEmpty() && !playersField.getText().isEmpty()) {
             nickName = usernameField.getText();
             planeTextFileHandler.write("PlayerData.csv", nickName);
             isContinue = false;
+            player= playersField.getText();
             GameUnoStage.getInstance();
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "¡Ingresa un nombre de usuario!");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "¡Ingresa un nombre de usuario y cantidad de jugadores!");
             DialogPane dialogPane = alert.getDialogPane();
             dialogPane.getStylesheets().add(getClass().getResource("/org/example/eiscuno/styles.css").toExternalForm());
             dialogPane.getStyleClass().add("warning-label");
@@ -63,19 +66,16 @@ public class WelcomeStageController {
             alert.showAndWait();
         }
 
-        if(!playersField.getText().isEmpty()) {
-            player= playersField.getText();
-            isContinue = false;
-            GameUnoStage.getInstance();
+        try{
+            int numPlayers = Integer.parseInt(playersField.getText().trim());
+            if(numPlayers < 1 || numPlayers > 3){
+                showWarning("¡La cantidad de jugadores debe estar entre 1 y 3!");
+               GameUnoStage.getInstance(numPlayers);
+            }
+        } catch (NumberFormatException e){
+            showWarning("¡Ingresa un número válido para la cantidad de jugadores!");
         }
-        else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "¡Ingresa el numero de jugadores!");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/org/example/eiscuno/styles.css").toExternalForm());
-            dialogPane.getStyleClass().add("warning-label");
-            alert.setTitle("Warning");
-            alert.showAndWait();
-        }
+
     }
 
     /**

@@ -8,7 +8,7 @@ package org.example.eiscuno.model.unoenum;
 public enum EISCUnoEnum {
     FAVICON("images/icono_poker.png"),
     UNO("images/uno.png"),
-    BACKGROUND_UNO("images/background_uno.png"),
+    BACKGROUND_UNO("images/background.png"),
     BUTTON_UNO("images/button_uno.png"),
     RECURSO_10("cartas-poker/Recurso 10.png"),
     RECURSO_11("cartas-poker/Recurso 11.png"),

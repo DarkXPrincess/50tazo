@@ -61,7 +61,7 @@ public class WelcomeStage extends Stage{
         setTitle("Welcome");
 
         getIcons().add(
-                new Image(String.valueOf(getClass().getResource("/org/example/eiscuno/icono_poker.png"))));
+                new Image(String.valueOf(getClass().getResource("/org/example/eiscuno/images/icono_poker.png"))));
         setScene(scene);
         setResizable(false);
         show();
