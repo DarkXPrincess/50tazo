@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="rootPane" prefHeight="650" prefWidth="730" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eiscuno.controller.WelcomeStageController">
+<StackPane fx:id="rootPane" prefHeight="650" prefWidth="730" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.eiscuno.controller.WelcomeStageController">
 
     <VBox alignment="CENTER" maxWidth="400" spacing="20">
         <ImageView fx:id="logoImage" fitHeight="211.0" fitWidth="381.0" preserveRatio="true">
@@ -22,15 +22,12 @@
         </ImageView>
 
         <Label style="-fx-text-fill: #fff3e0; -fx-font-size: 24px; -fx-font-weight: bold;" styleClass="welcome-label" />
-      <TextField fx:id="usernameField" layoutX="85.0" layoutY="392.0" maxWidth="250" promptText="Type your username" />
 
-        <TextField fx:id="playersField" maxWidth="250" promptText="Type players" />
+        <TextField fx:id="playersField" maxWidth="250" promptText="Ingresar cantidad de jugadores" />
 
         <VBox alignment="CENTER" spacing="10">
             <Button fx:id="playButton" maxWidth="150" onAction="#onHandlePlayButton" styleClass="welcome-button" text="Play" />
-            <Button fx:id="continueButton" maxWidth="150" onAction="#onHandleContinueButton" styleClass="welcome-button" text="Continue" />
             <Button fx:id="quitButton" maxWidth="150" onAction="#onHandleQuitButton" styleClass="welcome-button" text="Quit Game" />
-            <Button fx:id="creditsButton" maxWidth="150" onAction="#onHandleCreditsButton" styleClass="welcome-button" text="Credits" />
         </VBox>
     </VBox>
 </StackPane>
