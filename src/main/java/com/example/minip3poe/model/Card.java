@@ -4,7 +4,7 @@ package com.example.minip3poe.model;
  * Represents a playing card in the Cincuentazo game.
  * Each card has a rank, suit, and a value that affects the table sum.
  *
- * @author Juan David Salazar
+ * @author [Tu nombre]
  * @version 1.0
  */
 public class Card {
@@ -103,93 +103,11 @@ public class Card {
      *
      * @return the filename string
      */
-    /**
-     * Returns the image filename for this card based on the Recurso pattern.
-     * Note: There's a skip from Recurso 38 to 40 (39 doesn't exist).
-     *
-     * @return the filename string (e.g., "Recurso 3.png")
-     */
     public String getImageName() {
-        int resourceNumber = calculateResourceNumber();
-        return "Recurso " + resourceNumber + ".png";
+        String rankStr = rank.name().toLowerCase();
+        String suitStr = suit.name().toLowerCase();
+        return rankStr + "_of_" + suitStr + ".png";
     }
-
-    /**
-     * Calculates the resource number for this card.
-     * Pattern: Clubs (3-15), Spades (16-28), Hearts (29-38, 40-42), Diamonds (43-55)
-     *
-     * @return the resource number
-     */
-    private int calculateResourceNumber() {
-        // Base number for each suit
-        int suitBase;
-        switch (suit) {
-            case CLUBS:
-                suitBase = 3;
-                break;
-            case SPADES:
-                suitBase = 16;
-                break;
-            case HEARTS:
-                suitBase = 29;
-                break;
-            case DIAMONDS:
-                suitBase = 43;
-                break;
-            default:
-                suitBase = 3;
-        }
-
-        // Offset within the suit (A=0, 2=1, 3=2, ..., 10=9, J=10, Q=11, K=12)
-        int rankOffset;
-        switch (rank) {
-            case ACE:
-                rankOffset = 0;
-                break;
-            case TWO:
-                rankOffset = 1;
-                break;
-            case THREE:
-                rankOffset = 2;
-                break;
-            case FOUR:
-                rankOffset = 3;
-                break;
-            case FIVE:
-                rankOffset = 4;
-                break;
-            case SIX:
-                rankOffset = 5;
-                break;
-            case SEVEN:
-                rankOffset = 6;
-                break;
-            case EIGHT:
-                rankOffset = 7;
-                break;
-            case NINE:
-                rankOffset = 8;
-                break;
-            case TEN:
-                rankOffset = 9;
-                break;
-            case JACK:
-                // Special case for Hearts: skip from 38 to 40
-                rankOffset = (suit == Suit.HEARTS) ? 11 : 10;
-                break;
-            case QUEEN:
-                rankOffset = (suit == Suit.HEARTS) ? 12 : 11;
-                break;
-            case KING:
-                rankOffset = (suit == Suit.HEARTS) ? 13 : 12;
-                break;
-            default:
-                rankOffset = 0;
-        }
-
-        return suitBase + rankOffset;
-    }
-
 
     @Override
     public String toString() {
