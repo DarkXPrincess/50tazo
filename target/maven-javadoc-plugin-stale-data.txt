@@ -1,0 +1,57 @@
+@options
+@packages
+-classpath
+'C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-controls/21.0.2/javafx-controls-21.0.2.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-controls/21.0.2/javafx-controls-21.0.2-win.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-graphics/21.0.2/javafx-graphics-21.0.2.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-graphics/21.0.2/javafx-graphics-21.0.2-win.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-base/21.0.2/javafx-base-21.0.2.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-base/21.0.2/javafx-base-21.0.2-win.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-fxml/21.0.2/javafx-fxml-21.0.2.jar;C:/Users/USUARIO/.m2/repository/org/openjfx/javafx-fxml/21.0.2/javafx-fxml-21.0.2-win.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/USUARIO/Downloads/50TAZO/src/main/java;C:/Users/USUARIO/Downloads/50TAZO/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/USUARIO/Downloads/50TAZO/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'50TAZO 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'50TAZO 1.0-SNAPSHOT API'
+org.example.eiscuno.ai
+org.example.eiscuno.controller
+org.example.eiscuno.exception
+org.example.eiscuno
+org.example.eiscuno.model
+org.example.eiscuno.view
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-controls\21.0.2\javafx-controls-21.0.2.jar = 1762823262538
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-controls\21.0.2\javafx-controls-21.0.2-win.jar = 1762823264084
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-graphics\21.0.2\javafx-graphics-21.0.2.jar = 1762823262705
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-graphics\21.0.2\javafx-graphics-21.0.2-win.jar = 1762823266685
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-base\21.0.2\javafx-base-21.0.2.jar = 1762823263040
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-base\21.0.2\javafx-base-21.0.2-win.jar = 1762823263720
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-fxml\21.0.2\javafx-fxml-21.0.2.jar = 1762823263055
+C:\Users\USUARIO\.m2\repository\org\openjfx\javafx-fxml\21.0.2\javafx-fxml-21.0.2-win.jar = 1762823263622
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java = 1762823041861
+C:\Users\USUARIO\Downloads\50TAZO\target\generated-sources\annotations = 1762823744149
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\allclasses-index.html = 1762823752173
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\allpackages-index.html = 1762823752182
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\element-list = 1762823751611
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\help-doc.html = 1762823752272
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\index-all.html = 1762823752246
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\index.html = 1762823752142
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\member-search-index.js = 1762823752193
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\module-search-index.js = 1762823752184
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\overview-summary.html = 1762823752258
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\overview-tree.html = 1762823752133
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\package-search-index.js = 1762823752187
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\search.html = 1762823752250
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\serialized-form.html = 1762823751896
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\tag-search-index.js = 1762823752196
+C:\Users\USUARIO\Downloads\50TAZO\target\site\apidocs\type-search-index.js = 1762823752190

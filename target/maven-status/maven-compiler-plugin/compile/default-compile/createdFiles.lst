@@ -1,0 +1,16 @@
+org\example\eiscuno\model\Deck.class
+org\example\eiscuno\model\Rank.class
+org\example\eiscuno\ai\GameLoopManager.class
+org\example\eiscuno\model\Card.class
+org\example\eiscuno\controller\GameUnoController.class
+org\example\eiscuno\exception\NoPlayableCardException.class
+org\example\eiscuno\ai\AIPlayer.class
+org\example\eiscuno\controller\WelcomeStageController.class
+org\example\eiscuno\exception\EmptyDeckException.class
+org\example\eiscuno\model\Suit.class
+org\example\eiscuno\model\GameEngine$1.class
+org\example\eiscuno\view\GameUnoView.class
+org\example\eiscuno\Main.class
+org\example\eiscuno\model\GameEngine.class
+org\example\eiscuno\model\Card$1.class
+org\example\eiscuno\model\Player.class

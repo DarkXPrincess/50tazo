@@ -1,0 +1,14 @@
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\ai\AIPlayer.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\ai\GameLoopManager.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\controller\GameUnoController.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\controller\WelcomeStageController.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\exception\EmptyDeckException.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\exception\NoPlayableCardException.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\Main.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\model\Card.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\model\Deck.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\model\GameEngine.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\model\Player.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\model\Rank.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\model\Suit.java
+C:\Users\USUARIO\Downloads\50TAZO\src\main\java\org\example\eiscuno\view\GameUnoView.java
