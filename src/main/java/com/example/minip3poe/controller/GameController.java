@@ -7,6 +7,8 @@ import com.example.minip3poe.model.player.HumanPlayer;
 import com.example.minip3poe.model.player.MachinePlayer;
 import com.example.minip3poe.model.player.Player;
 import com.example.minip3poe.view.MenuStage;
+import com.example.minip3poe.controller.threads.MachineThinkingTask;
+import com.example.minip3poe.controller.threads.MachineDrawingTask;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -173,14 +175,14 @@ public class GameController {
             processTurn();
             return;
         }
-
+        debugPrintAllHands();
         logMessage("Tu turno. Selecciona una carta para jugar.");
         updateUI();
     }
 
 
     /**
-     * Processes machine player's turn using a separate thread.
+     * Processes machine player's turn using separate task classes.
      * Implements thread requirement and HU-3 + HU-4.
      *
      * @param machine the machine player
@@ -188,17 +190,13 @@ public class GameController {
     private void processMachineTurn(MachinePlayer machine) {
         isProcessingTurn = true;
 
-        // ✅ Actualizar label de turno INMEDIATAMENTE
+        // Update turn label immediately
         turnLabel.setText(machine.getName());
 
-        // Verificar si tiene cartas válidas (HU-5: Eliminación)
+        // Check if has valid cards (HU-5: Elimination)
         if (!machine.hasValidCard(gameModel.getTableSum())) {
             logMessage(machine.getName() + " no tiene cartas válidas. ¡Ha sido eliminado!");
-
-            // Enviar cartas del jugador eliminado al mazo
             gameModel.eliminatePlayer(machine);
-
-            // Pasar al siguiente turno
             gameModel.nextTurn();
             processTurn();
             return;
@@ -206,72 +204,18 @@ public class GameController {
 
         logMessage(machine.getName() + " está pensando...");
 
-        Task<Void> machineTask = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                // HU-3: Simular "pensamiento" de 2-4 segundos
-                Thread.sleep(machine.getThinkingDelay());
+        // Create and start thinking task
+        MachineThinkingTask thinkingTask = new MachineThinkingTask(
+                machine,
+                gameModel,
+                this::logMessage,        // Logger callback
+                this::updateUI,          // UI updater callback
+                this::processTurn        // Next turn processor callback
+        );
 
-                Platform.runLater(() -> {
-                    try {
-                        // Seleccionar carta válida
-                        Card selectedCard = machine.selectCard(gameModel.getTableSum());
-
-                        if (selectedCard != null) {
-                            // Jugar la carta
-                            gameModel.playCard(selectedCard);
-                            logMessage(machine.getName() + " jugó: " + selectedCard);
-                            updateUI();
-
-                            // HU-4: Esperar 1-2 segundos antes de robar (segundo hilo)
-                            logMessage(machine.getName() + " va a robar una carta...");
-
-                            new Thread(() -> {
-                                try {
-                                    Thread.sleep(machine.getDrawingDelay()); // 1-2 segundos
-
-                                    Platform.runLater(() -> {
-                                        // Robar carta
-                                        Card drawnCard = gameModel.drawCard();
-
-                                        if (drawnCard != null) {
-                                            logMessage(machine.getName() + " robó una carta del mazo.");
-                                        } else {
-                                            logMessage(machine.getName() + " intentó robar pero no hay cartas.");
-                                        }
-
-                                        updateUI();
-
-                                        // Pasar al siguiente turno
-                                        gameModel.nextTurn();
-                                        processTurn();
-                                    });
-
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }).start();
-
-                        } else {
-                            // No debería llegar aquí porque ya verificamos hasValidCard
-                            logMessage("Error: " + machine.getName() + " no pudo seleccionar carta.");
-                            gameModel.nextTurn();
-                            processTurn();
-                        }
-
-                    } catch (InvalidCardPlayException e) {
-                        logMessage("Error: " + e.getMessage());
-                        gameModel.nextTurn();
-                        processTurn();
-                    }
-                });
-
-                return null;
-            }
-        };
-
-        new Thread(machineTask).start();
+        new Thread(thinkingTask).start();
     }
+
 
 
     /**
@@ -356,7 +300,7 @@ public class GameController {
         } else {
             logMessage("No hay más cartas en el mazo.");
         }
-
+        debugPrintAllHands();
         // Resetear flag y pasar turno
         waitingForHumanDraw = false;
         gameModel.nextTurn();
@@ -491,6 +435,28 @@ public class GameController {
         alert.showAndWait();
 
         handleExit();
+    }
+
+
+
+    private void debugPrintAllHands() {
+        System.out.println("\n========== DEBUG: MANOS DE JUGADORES ==========");
+
+        for (Player player : gameModel.getAllPlayers()) {
+            // ✅ Cambiar nombre si es el jugador humano
+            String playerName = (player instanceof HumanPlayer) ? "TÚ" : player.getName();
+
+            System.out.println("\n" + playerName + " (" + player.getHandSize() + " cartas):");
+
+            int cardNumber = 1;
+            for (Card card : player.getHand()) {
+                System.out.println("  " + cardNumber + ". " + card +
+                        " (Valor: " + card.getGameValue(gameModel.getTableSum()) + ")");
+                cardNumber++;
+            }
+        }
+
+        System.out.println("\n==============================================\n");
     }
 
     /**
