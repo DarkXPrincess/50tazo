@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 
 /**
  * Controller for the main menu scene.
- * Handles machine player count input and game initialization.
+ * Handles machine player count input, human player name, and game initialization.
  * Implements HU-1: Inicio del juego
  *
  * @author [Tu nombre]
@@ -21,6 +21,9 @@ public class MenuController {
 
     @FXML
     private TextField playerCountField;
+
+    @FXML
+    private TextField human;
 
     @FXML
     private Button playButton;
@@ -43,6 +46,16 @@ public class MenuController {
                 playerCountField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+        
+        // Add text field validation for human name: only letters and spaces (supports Unicode letters)
+        if (human != null) {
+            human.textProperty().addListener((observable, oldValue, newValue) -> {
+                // Allow letters from any language and spaces; remove other characters
+                if (!newValue.matches("[\\p{L} ]*")) {
+                    human.setText(newValue.replaceAll("[^\\p{L} ]", ""));
+                }
+            });
+        }
     }
 
     /**
@@ -60,11 +73,18 @@ public class MenuController {
                 return;
             }
 
+            // Get human player name
+            String humanName = human.getText().trim();
+            if (humanName.isEmpty()) {
+                showError("Invalid Input", "Please enter your name.");
+                return;
+            }
+
             int machineCount = Integer.parseInt(input);
 
             // Create and initialize game model
             GameModel gameModel = new GameModel();
-            gameModel.initializeGame(machineCount);
+            gameModel.initializeGame(machineCount, humanName);
 
             // Close menu stage and open game stage
             MenuStage.deleteInstance();

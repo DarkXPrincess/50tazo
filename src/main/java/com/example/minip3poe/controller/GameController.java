@@ -12,7 +12,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -48,7 +47,7 @@ public class GameController {
     private ImageView machineHandRight;
 
     @FXML
-    private TextArea commTextArea;
+    private Label descripcion;
 
     @FXML
     private Label turnLabel;
@@ -174,7 +173,7 @@ public class GameController {
             return;
         }
 
-        logMessage("Tu turno. Selecciona una carta para jugar.");
+        logMessage(human.getName() + ": Tu turno. Selecciona una carta para jugar.");
         updateUI();
     }
 
@@ -457,14 +456,13 @@ public class GameController {
 
 
     /**
-     * Logs a message to the communication text area.
+     * Logs a message to the communication label.
      *
      * @param message the message to log
      */
     private void logMessage(String message) {
         Platform.runLater(() -> {
-            commTextArea.appendText(message+"\n");
-            commTextArea.setScrollTop(Double.MAX_VALUE);
+            descripcion.setText(message);
         });
     }
 

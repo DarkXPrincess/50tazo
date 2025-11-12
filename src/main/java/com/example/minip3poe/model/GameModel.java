@@ -50,9 +50,10 @@ public class GameModel {
      * Creates 1 human player and the specified number of machine players.
      *
      * @param machineCount number of machine players (1-3)
+     * @param humanName the name of the human player
      * @throws InvalidPlayerCountException if machineCount is not between 1 and 3
      */
-    public void initializeGame(int machineCount) throws InvalidPlayerCountException {
+    public void initializeGame(int machineCount, String humanName) throws InvalidPlayerCountException {
         if (machineCount < 1 || machineCount > 3) {
             throw new InvalidPlayerCountException(machineCount);
         }
@@ -68,8 +69,8 @@ public class GameModel {
         // Create deck
         deck = new Deck();
 
-        // Create human player
-        HumanPlayer human = new HumanPlayer("Human Player");
+        // Create human player with the provided name
+        HumanPlayer human = new HumanPlayer(humanName);
         allPlayers.add(human);
 
         // Create machine players
