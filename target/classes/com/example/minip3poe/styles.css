@@ -109,3 +109,9 @@
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.2), 6, 0, 2, 2);
 }
 
+.comms-label {
+    -fx-font-size: 22px;
+    -fx-text-fill: BLACK;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}

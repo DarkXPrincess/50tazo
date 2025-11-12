@@ -463,7 +463,7 @@ public class GameController {
      */
     private void logMessage(String message) {
         Platform.runLater(() -> {
-            commTextArea.appendText(message + "\n");
+            commTextArea.appendText(message+"\n");
             commTextArea.setScrollTop(Double.MAX_VALUE);
         });
     }

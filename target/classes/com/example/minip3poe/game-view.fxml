@@ -24,11 +24,11 @@
             <Image url="@images/casino_background.jpg" />
          </image>
       </ImageView>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="735.0" style="-fx-background-color: transparent;">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="747.0" style="-fx-background-color: transparent;">
          <left>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandRight" fitHeight="301.0" fitWidth="228.0" layoutX="-15.0" layoutY="-38.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandRight" fitHeight="301.0" fitWidth="228.0" layoutX="-28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20right.png" />
                      </image>
@@ -56,23 +56,23 @@
                         <Image url="@cartas-poker/mazo.png" />
                      </image>
                   </ImageView>
-                  <TextArea fx:id="commTextArea" layoutY="212.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="63.0" prefWidth="345.0" promptText="Comunicación" style="-fx-background-color: white;" styleClass="elemento" stylesheets="@styles.css">
+                  <TextArea fx:id="commTextArea" editable="false" layoutX="-196.0" layoutY="203.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.75" prefHeight="70.0" prefWidth="741.0" promptText="Comunicación" style="-fx-background-color: white;" styleClass="elemento" stylesheets="@styles.css">
                      <effect>
-                        <Lighting specularConstant="0.09" specularExponent="40.0">
+                        <Lighting diffuseConstant="2.0" specularConstant="0.16" specularExponent="40.0">
                            <bumpInput>
                               <Shadow />
                            </bumpInput>
                            <light>
                               <Light.Distant>
                                  <color>
-                                    <Color red="1.0" green="0.949999988079071" opacity="0.7473282217979431" />
+                                    <Color red="0.6000000238418579" green="0.5895000100135803" blue="0.4740000069141388" opacity="0.6291602849960327" />
                                  </color>
                               </Light.Distant>
                            </light>
                         </Lighting>
                      </effect>
                      <font>
-                        <Font name="Comic Sans MS Bold" size="22.0" />
+                        <Font name="Comic Sans MS Bold" size="14.0" />
                      </font></TextArea>
                </children>
             </Pane>
@@ -94,11 +94,14 @@
             </AnchorPane>
          </top>
          <bottom>
-            <HBox alignment="CENTER" prefHeight="138.0" prefWidth="735.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="138.0" prefWidth="778.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox fx:id="turnHBox" alignment="CENTER_LEFT" spacing="10.0" styleClass="welcome-text" stylesheets="@styles.css">
                      <children>
-                        <Label fx:id="turnLabel" styleClass="general-label" stylesheets="@styles.css" text="Turno:" />
+                        <Label fx:id="turnLabel" styleClass="general-label" stylesheets="@styles.css" text="Turno:">
+                           <font>
+                              <Font name="Comic Sans MS" size="12.0" />
+                           </font></Label>
                      </children>
                   </HBox>
                   <GridPane fx:id="gridPaneCardsPlayer">
