@@ -202,7 +202,7 @@ public class GameModel {
      *
      * @param player the player to eliminate
      */
-    private void eliminatePlayer(Player player) {
+    public void eliminatePlayer(Player player) {
         player.eliminate();
 
         // Send player's cards to bottom of deck

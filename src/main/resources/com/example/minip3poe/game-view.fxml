@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="535.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.minip3poe.controller.GameController">
@@ -24,7 +28,7 @@
          <left>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandRight" fitHeight="228.0" fitWidth="228.0" layoutX="-15.0" layoutY="-38.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandRight" fitHeight="301.0" fitWidth="228.0" layoutX="-15.0" layoutY="-38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20right.png" />
                      </image>
@@ -35,7 +39,7 @@
          <right>
             <Pane prefHeight="194.0" prefWidth="190.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandLeft" fitHeight="301.0" fitWidth="233.0" layoutX="-21.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandLeft" fitHeight="301.0" fitWidth="271.0" layoutX="-38.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20left.png" />
                      </image>
@@ -47,19 +51,36 @@
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="tableImageView" fitHeight="173.0" fitWidth="127.0" layoutX="207.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="deckImageView" fitHeight="188.0" fitWidth="164.0" layoutX="9.0" layoutY="5.0" preserveRatio="true">
+                  <ImageView fx:id="deckImageView" fitHeight="188.0" fitWidth="164.0" layoutY="5.0" preserveRatio="true">
                      <image>
                         <Image url="@cartas-poker/mazo.png" />
                      </image>
                   </ImageView>
-                  <TextArea fx:id="commTextArea" layoutY="190.0" prefHeight="17.0" prefWidth="345.0" promptText="Comunicación" styleClass="welcome-text" stylesheets="@styles.css" />
+                  <TextArea fx:id="commTextArea" layoutY="212.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="63.0" prefWidth="345.0" promptText="Comunicación" style="-fx-background-color: white;" styleClass="elemento" stylesheets="@styles.css">
+                     <effect>
+                        <Lighting specularConstant="0.09" specularExponent="40.0">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant>
+                                 <color>
+                                    <Color red="1.0" green="0.949999988079071" opacity="0.7473282217979431" />
+                                 </color>
+                              </Light.Distant>
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <font>
+                        <Font name="Comic Sans MS Bold" size="22.0" />
+                     </font></TextArea>
                </children>
             </Pane>
          </center>
          <top>
             <AnchorPane prefHeight="136.0" prefWidth="735.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandTop" fitHeight="202.0" fitWidth="174.0" layoutX="288.0" layoutY="-36.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandTop" fitHeight="195.0" fitWidth="174.0" layoutX="288.0" layoutY="-36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20down.png" />
                      </image>

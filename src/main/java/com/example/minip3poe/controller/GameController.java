@@ -61,6 +61,7 @@ public class GameController {
 
     private GameModel gameModel;
     private boolean isProcessingTurn = false;
+    private boolean waitingForHumanDraw = false;
 
     /**
      * Initializes the controller.
@@ -155,74 +156,107 @@ public class GameController {
      */
     private void processHumanTurn() {
         isProcessingTurn = false;
-        logMessage("Tu turno. Selecciona una carta o roba del mazo.");
+        waitingForHumanDraw = false;
+
+        HumanPlayer human = (HumanPlayer) gameModel.getCurrentPlayer();
+
+        // Verificar si tiene cartas válidas
+        if (!human.hasValidCard(gameModel.getTableSum())) {
+            // ELIMINACIÓN: No tiene cartas válidas
+            logMessage(human.getName() + " no tiene cartas válidas. ¡Has sido eliminado!");
+
+            // Enviar cartas del jugador eliminado al mazo
+            gameModel.eliminatePlayer(human);
+
+            // Pasar al siguiente turno
+            gameModel.nextTurn();
+            processTurn();
+            return;
+        }
+
+        logMessage("Tu turno. Selecciona una carta para jugar.");
         updateUI();
     }
 
+
     /**
      * Processes machine player's turn using a separate thread.
-     * Implements thread requirement.
+     * Implements thread requirement and HU-3 + HU-4.
      *
      * @param machine the machine player
      */
     private void processMachineTurn(MachinePlayer machine) {
         isProcessingTurn = true;
+
+        // ✅ Actualizar label de turno INMEDIATAMENTE
+        turnLabel.setText(machine.getName());
+
+        // Verificar si tiene cartas válidas (HU-5: Eliminación)
+        if (!machine.hasValidCard(gameModel.getTableSum())) {
+            logMessage(machine.getName() + " no tiene cartas válidas. ¡Ha sido eliminado!");
+
+            // Enviar cartas del jugador eliminado al mazo
+            gameModel.eliminatePlayer(machine);
+
+            // Pasar al siguiente turno
+            gameModel.nextTurn();
+            processTurn();
+            return;
+        }
+
         logMessage(machine.getName() + " está pensando...");
 
         Task<Void> machineTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                // Simulate thinking delay
+                // HU-3: Simular "pensamiento" de 2-4 segundos
                 Thread.sleep(machine.getThinkingDelay());
 
                 Platform.runLater(() -> {
                     try {
-                        // Try to play a card
+                        // Seleccionar carta válida
                         Card selectedCard = machine.selectCard(gameModel.getTableSum());
 
                         if (selectedCard != null) {
-                            // Machine has a valid card
+                            // Jugar la carta
                             gameModel.playCard(selectedCard);
-                            logMessage(machine.getName() + " jugó una carta: " + selectedCard);
+                            logMessage(machine.getName() + " jugó: " + selectedCard);
                             updateUI();
 
-                            // Move to next turn
-                            gameModel.nextTurn();
-                            processTurn();
+                            // HU-4: Esperar 1-2 segundos antes de robar (segundo hilo)
+                            logMessage(machine.getName() + " va a robar una carta...");
 
-                        } else {
-                            // Machine has no valid card, must draw
-                            logMessage(machine.getName() + " no tiene carta válida. Robando...");
-
-                            // Wait before drawing
                             new Thread(() -> {
                                 try {
-                                    Thread.sleep(machine.getDrawingDelay());
-                                    Platform.runLater(() -> {
-                                        Card drawnCard = gameModel.drawCard();
-                                        logMessage(machine.getName() + " robó una carta del mazo.");
-                                        updateUI();
+                                    Thread.sleep(machine.getDrawingDelay()); // 1-2 segundos
 
-                                        // Check if drawn card can be played
-                                        if (drawnCard != null && drawnCard.canBePlayed(gameModel.getTableSum())) {
-                                            try {
-                                                gameModel.playCard(drawnCard);
-                                                logMessage(machine.getName() + " jugó la carta robada: " + drawnCard);
-                                                updateUI();
-                                            } catch (InvalidCardPlayException e) {
-                                                // Should not happen, but handle just in case
-                                                e.printStackTrace();
-                                            }
+                                    Platform.runLater(() -> {
+                                        // Robar carta
+                                        Card drawnCard = gameModel.drawCard();
+
+                                        if (drawnCard != null) {
+                                            logMessage(machine.getName() + " robó una carta del mazo.");
+                                        } else {
+                                            logMessage(machine.getName() + " intentó robar pero no hay cartas.");
                                         }
 
-                                        // Move to next turn
+                                        updateUI();
+
+                                        // Pasar al siguiente turno
                                         gameModel.nextTurn();
                                         processTurn();
                                     });
+
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             }).start();
+
+                        } else {
+                            // No debería llegar aquí porque ya verificamos hasValidCard
+                            logMessage("Error: " + machine.getName() + " no pudo seleccionar carta.");
+                            gameModel.nextTurn();
+                            processTurn();
                         }
 
                     } catch (InvalidCardPlayException e) {
@@ -239,6 +273,7 @@ public class GameController {
         new Thread(machineTask).start();
     }
 
+
     /**
      * Handles human player clicking on a card.
      * Implements HU-3: Jugar una carta
@@ -249,6 +284,12 @@ public class GameController {
     private void handleCardClick(Card card, ImageView cardImageView) {
         if (isProcessingTurn) {
             return; // Not human's turn
+        }
+
+        // ← NUEVO: Si ya jugó carta, no puede jugar otra hasta robar
+        if (waitingForHumanDraw) {
+            logMessage("Debes robar una carta del mazo antes de continuar.");
+            return;
         }
 
         if (!(gameModel.getCurrentPlayer() instanceof HumanPlayer)) {
@@ -267,21 +308,26 @@ public class GameController {
         try {
             // Play the card
             gameModel.playCard(card);
-            logMessage("Jugaste: " + card);
+            logMessage("Jugaste: " + card + ". Ahora roba una carta del mazo."); // ← MENSAJE ACTUALIZADO
             updateUI();
 
-            // Move to next turn
-            gameModel.nextTurn();
-            processTurn();
+            // ← NUEVO: Activar flag de espera
+            waitingForHumanDraw = true;
+            // NO pasar turno aquí, esperar a que robe
 
         } catch (InvalidCardPlayException e) {
             logMessage("Error: " + e.getMessage());
         }
     }
 
+
     /**
      * Handles human player clicking on the deck.
      * Implements HU-4: Tomar una carta del mazo
+     */
+    /**
+     * Handles human player clicking on the deck.
+     * Implements HU-4: Tomar una carta del mazo (solo después de jugar)
      */
     private void handleDrawCard() {
         if (isProcessingTurn) {
@@ -295,32 +341,28 @@ public class GameController {
 
         HumanPlayer human = (HumanPlayer) gameModel.getCurrentPlayer();
 
-        // Check if player has valid cards
-        if (human.hasValidCard(gameModel.getTableSum())) {
-            logMessage("Tienes cartas válidas para jugar. No puedes robar.");
+        // Solo se puede robar después de haber jugado una carta
+        if (!waitingForHumanDraw) {
+            logMessage("Primero debes jugar una carta.");
             return;
         }
 
-        // Draw card
+        // Robar carta obligatoriamente después de jugar
         Card drawnCard = gameModel.drawCard();
 
         if (drawnCard != null) {
             logMessage("Robaste: " + drawnCard);
             updateUI();
-
-            // Check if drawn card can be played
-            if (drawnCard.canBePlayed(gameModel.getTableSum())) {
-                logMessage("Puedes jugar la carta robada o pasar turno.");
-                // Player can choose to play it or pass
-            } else {
-                logMessage("La carta robada no se puede jugar. Pasando turno...");
-                gameModel.nextTurn();
-                processTurn();
-            }
         } else {
             logMessage("No hay más cartas en el mazo.");
         }
+
+        // Resetear flag y pasar turno
+        waitingForHumanDraw = false;
+        gameModel.nextTurn();
+        processTurn();
     }
+
 
     /**
      * Updates all UI elements based on current game state.
@@ -333,7 +375,7 @@ public class GameController {
         }
 
         // Update table sum
-        colorLabel.setText("Cuenta: " + gameModel.getTableSum());
+        colorLabel.setText(String.valueOf(gameModel.getTableSum()));
 
         // Update turn label
         Player currentPlayer = gameModel.getCurrentPlayer();
@@ -383,14 +425,36 @@ public class GameController {
      */
     private void loadCardImage(ImageView imageView, Card card) {
         try {
-            String imagePath = "/view/cartas-poker/" + card.getImageName();
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            String imagePath = "/com/example/minip3poe/cartas-poker/" + card.getImageName();
+            System.out.println("Intentando cargar: " + imagePath);
+
+            // Método alternativo usando URL
+            java.net.URL imageUrl = getClass().getResource(imagePath);
+
+            if (imageUrl == null) {
+                System.err.println("❌ ERROR: Archivo no encontrado en classpath: " + imagePath);
+                System.err.println("Carta: " + card);
+
+                // Intentar listar contenido de la carpeta
+                java.net.URL folderUrl = getClass().getResource("/com/example/minip3poe/cartas-poker/");
+                if (folderUrl != null) {
+                    System.out.println("✓ La carpeta cartas-poker SÍ existe");
+                } else {
+                    System.err.println("❌ La carpeta cartas-poker NO existe en el classpath");
+                }
+                return;
+            }
+
+            Image image = new Image(imageUrl.toExternalForm());
             imageView.setImage(image);
+            System.out.println("✓ Imagen cargada exitosamente!");
+
         } catch (Exception e) {
             System.err.println("Failed to load card image: " + card.getImageName());
             e.printStackTrace();
         }
     }
+
 
     /**
      * Logs a message to the communication text area.
