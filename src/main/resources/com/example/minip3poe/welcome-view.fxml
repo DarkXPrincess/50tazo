@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="rootPane" prefHeight="650" prefWidth="730" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.minip3poe.controller.MenuController">
+<StackPane fx:id="rootPane" prefHeight="650" prefWidth="730" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.minip3poe.controller.MenuController">
 
     <VBox alignment="CENTER" maxWidth="400" spacing="20">
         <ImageView fx:id="logoImage" fitHeight="211.0" fitWidth="381.0" preserveRatio="true">
@@ -22,6 +22,7 @@
         </ImageView>
 
         <Label style="-fx-text-fill: #fff3e0; -fx-font-size: 24px; -fx-font-weight: bold;" styleClass="welcome-label" />
+      <TextField fx:id="jugador" maxWidth="250" promptText="Ingresa tu nombre" />
 
         <TextField fx:id="playerCountField" maxWidth="250" promptText="Ingresar cantidad de jugadores" />
 

@@ -4,6 +4,7 @@ import com.example.minip3poe.controller.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,6 +38,9 @@ public class GameStage extends Stage {
         setTitle("Cincuentazo - Game");
         setResizable(false);
         show();
+
+        Image icono = new Image(getClass().getResourceAsStream("/com/example/minip3poe/images/icono_poker.png"));
+        getIcons().add(icono);
     }
 
 

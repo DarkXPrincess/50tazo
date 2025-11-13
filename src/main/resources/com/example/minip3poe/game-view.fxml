@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.effect.Light.Distant?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,10 +11,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="535.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.minip3poe.controller.GameController">
+<AnchorPane prefHeight="535.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.minip3poe.controller.GameController">
    <children>
       <ImageView fitHeight="549.0" fitWidth="754.0" layoutX="-7.0">
          <image>
@@ -48,7 +45,7 @@
             </Pane>
          </right>
          <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Pane fx:id="centerPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="tableImageView" fitHeight="173.0" fitWidth="127.0" layoutX="207.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="deckImageView" fitHeight="188.0" fitWidth="164.0" layoutY="5.0" preserveRatio="true">
@@ -56,36 +53,19 @@
                         <Image url="@cartas-poker/mazo.png" />
                      </image>
                   </ImageView>
-                  <TextArea fx:id="commTextArea" editable="false" layoutX="-196.0" layoutY="203.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.75" prefHeight="70.0" prefWidth="741.0" promptText="Comunicación" style="-fx-background-color: white;" styleClass="elemento" stylesheets="@styles.css">
-                     <effect>
-                        <Lighting diffuseConstant="2.0" specularConstant="0.16" specularExponent="40.0">
-                           <bumpInput>
-                              <Shadow />
-                           </bumpInput>
-                           <light>
-                              <Light.Distant>
-                                 <color>
-                                    <Color red="0.6000000238418579" green="0.5895000100135803" blue="0.4740000069141388" opacity="0.6291602849960327" />
-                                 </color>
-                              </Light.Distant>
-                           </light>
-                        </Lighting>
-                     </effect>
-                     <font>
-                        <Font name="Comic Sans MS Bold" size="14.0" />
-                     </font></TextArea>
+                  <Label fx:id="descripcion" layoutX="14.0" layoutY="173.0" styleClass="general-label" stylesheets="@styles.css" text="Label" />
                </children>
             </Pane>
          </center>
          <top>
             <AnchorPane cacheShape="false" prefHeight="136.0" prefWidth="735.0" scaleShape="false" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="exitImage" fitHeight="67.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="exitImage" fitHeight="67.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="20.0">
                      <image>
-                        <Image url="@images/icono_poker.png" />
+                        <Image url="@images/back.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="machineHandTop" fitHeight="143.0" fitWidth="162.0" layoutX="282.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandTop" fitHeight="143.0" fitWidth="162.0" layoutX="282.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20down.png" />
                      </image>
@@ -96,14 +76,23 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="138.0" prefWidth="778.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox fx:id="turnHBox" alignment="CENTER_LEFT" spacing="10.0" styleClass="welcome-text" stylesheets="@styles.css">
+                  <VBox styleClass="welcome-text" stylesheets="@styles.css">
                      <children>
-                        <Label fx:id="turnLabel" styleClass="general-label" stylesheets="@styles.css" text="Turno:">
+                        <Label styleClass="general-label" stylesheets="@styles.css" text="Turno:">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="turnLabel" styleClass="general-label" stylesheets="@styles.css" text="0">
                            <font>
                               <Font name="Comic Sans MS" size="12.0" />
-                           </font></Label>
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
                      </children>
-                  </HBox>
+                  </VBox>
                   <GridPane fx:id="gridPaneCardsPlayer">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -121,16 +110,27 @@
                         <ImageView fitHeight="135.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
                      </children>
                   </GridPane>
-                  <HBox fx:id="colorHBox" alignment="CENTER" prefHeight="107.0" prefWidth="137.0" spacing="10.0" styleClass="welcome-text" stylesheets="@styles.css">
+                  <VBox styleClass="welcome-text" stylesheets="@styles.css">
                      <children>
-                        <Label fx:id="colorLabel" prefHeight="34.0" prefWidth="85.0" styleClass="general-label" stylesheets="@styles.css" text="Cuenta:">
+                        <Label styleClass="general-label" stylesheets="@styles.css" text="Cuenta:">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="colorLabel" prefHeight="34.0" prefWidth="85.0" styleClass="general-label" stylesheets="@styles.css" text="0">
                            <font>
                               <Font size="10.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
             </HBox>
          </bottom>
       </BorderPane>

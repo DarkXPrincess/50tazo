@@ -15,9 +15,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.geometry.Pos;
+import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 
@@ -50,7 +54,11 @@ public class GameController {
     private ImageView machineHandRight;
 
     @FXML
-    private TextArea commTextArea;
+    private TextField jugador;
+    @FXML
+    private Label descripcion;
+    @FXML
+    private Pane centerPane;
 
     @FXML
     private Label turnLabel;
@@ -79,6 +87,20 @@ public class GameController {
         // Make deck image show pointer cursor
         deckImageView.setStyle("-fx-cursor: hand;");
         exitImage.setStyle("-fx-cursor: hand;");
+
+        // Configure descripcion label: justify text, wrap and constrain within centerPane bounds
+        if (descripcion != null && centerPane != null) {
+            descripcion.setWrapText(true);
+            descripcion.setTextAlignment(TextAlignment.JUSTIFY);
+            descripcion.setAlignment(Pos.TOP_LEFT);
+
+            // Keep a left/right margin inside the center pane
+            descripcion.maxWidthProperty().bind(centerPane.widthProperty().multiply(0.9));
+            descripcion.layoutXProperty().bind(centerPane.widthProperty().multiply(0.05));
+
+            // Prevent the label from growing beyond the pane's height (it will be clipped if too long)
+            descripcion.maxHeightProperty().bind(centerPane.heightProperty().subtract(30));
+        }
     }
 
     /**
@@ -204,6 +226,10 @@ public class GameController {
         if (!machine.hasValidCard(gameModel.getTableSum()) && !machine.getHasPlayed()) {
             logMessage(machine.getName() + " no tiene cartas válidas. ¡Ha sido eliminado!");
             gameModel.eliminatePlayer(machine);
+
+            // Update UI so the eliminated machine's hand shows the eliminated image
+            updateMachineHandImages();
+
             gameModel.nextTurn();
             processTurn();
             return;
@@ -221,6 +247,68 @@ public class GameController {
         );
 
         new Thread(thinkingTask).start();
+    }
+
+    /**
+     * Update the machine hand ImageViews according to current players state.
+     * If a machine is eliminated, attempt to show an 'eliminado' image (if present),
+     * otherwise dim the ImageView to indicate elimination.
+     */
+    private void updateMachineHandImages() {
+        if (gameModel == null) return;
+
+        // Collect machine players in order (gameModel stores human first)
+        java.util.List<Player> all = gameModel.getAllPlayers();
+        java.util.List<Player> machines = new java.util.ArrayList<>();
+        for (Player p : all) {
+            if (!(p instanceof HumanPlayer)) machines.add(p);
+        }
+
+        // Mapping: index 0 -> machineHandTop, 1 -> machineHandLeft, 2 -> machineHandRight
+        Image topImg = null, leftImg = null, rightImg = null, elimImg = null;
+        try {
+            java.net.URL topUrl = getClass().getResource("/com/example/minip3poe/machine-hands/4%20cards%20blue%20facing%20down.png");
+            java.net.URL leftUrl = getClass().getResource("/com/example/minip3poe/machine-hands/4%20cards%20blue%20facing%20left.png");
+            java.net.URL rightUrl = getClass().getResource("/com/example/minip3poe/machine-hands/4%20cards%20blue%20facing%20right.png");
+            java.net.URL elimUrl = getClass().getResource("/com/example/minip3poe/images/eliminado.png");
+            if (topUrl != null) topImg = new Image(topUrl.toExternalForm());
+            if (leftUrl != null) leftImg = new Image(leftUrl.toExternalForm());
+            if (rightUrl != null) rightImg = new Image(rightUrl.toExternalForm());
+            if (elimUrl != null) elimImg = new Image(elimUrl.toExternalForm());
+        } catch (Exception ignored) {}
+
+        for (int i = 0; i < 3; i++) {
+            ImageView iv = null;
+            Image defaultImg = null;
+            if (i == 0) { iv = machineHandTop; defaultImg = topImg; }
+            if (i == 1) { iv = machineHandLeft; defaultImg = leftImg; }
+            if (i == 2) { iv = machineHandRight; defaultImg = rightImg; }
+
+            if (iv == null) continue;
+
+            if (i < machines.size()) {
+                Player m = machines.get(i);
+                if (m.isEliminated()) {
+                    if (elimImg != null) {
+                        iv.setImage(elimImg);
+                        iv.setOpacity(1.0);
+                    } else {
+                        // No eliminado image available -> dim the view
+                        if (defaultImg != null) iv.setImage(defaultImg);
+                        iv.setOpacity(0.35);
+                    }
+                    iv.setVisible(true);
+                } else {
+                    // Active machine -> show default hand image at full opacity
+                    if (defaultImg != null) iv.setImage(defaultImg);
+                    iv.setOpacity(1.0);
+                    iv.setVisible(true);
+                }
+            } else {
+                // No machine in this slot -> hide view
+                iv.setVisible(false);
+            }
+        }
     }
 
 
@@ -348,6 +436,26 @@ public class GameController {
         HumanPlayer human = gameModel.getHumanPlayer();
         if (human == null) return;
 
+        // If human is eliminated, show eliminated image instead of cards
+        if (human.isEliminated()) {
+            try {
+                java.net.URL elimUrl = getClass().getResource("/com/example/minip3poe/images/eliminado.png");
+                ImageView elimView = new ImageView();
+                if (elimUrl != null) {
+                    Image elimImg = new Image(elimUrl.toExternalForm());
+                    elimView.setImage(elimImg);
+                }
+                elimView.setFitWidth(120);
+                elimView.setFitHeight(160);
+                elimView.setPreserveRatio(true);
+                // place in first column
+                gridPaneCardsPlayer.add(elimView, 0, 0);
+            } catch (Exception e) {
+                System.err.println("Failed to load eliminado image: " + e.getMessage());
+            }
+            return;
+        }
+
         int column = 0;
         for (Card card : human.getHand()) {
             ImageView cardImageView = new ImageView();
@@ -415,8 +523,10 @@ public class GameController {
      */
     private void logMessage(String message) {
         Platform.runLater(() -> {
-            commTextArea.appendText("\n" + String.valueOf(logCounter) + ": "  + message);
-            logCounter++;
+            if (descripcion != null) {
+                descripcion.setText(message);
+            }
+           // logCounter++;
         });
     }
 

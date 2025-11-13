@@ -90,6 +90,13 @@ public abstract class Player implements IPlayer {
     public boolean getHasPlayed() {
         return hasPlayed;
     }
+    /**
+     * Sets the player's name.
+     * @param name the new name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
     @Override
     public List<Card> clearHand() {
         List<Card> cards = new ArrayList<>(hand);

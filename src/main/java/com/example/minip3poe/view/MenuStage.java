@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.image.Image;
 
 /**
  * A singleton Stage for the main menu window.
@@ -37,6 +38,10 @@ public class MenuStage extends Stage {
         setTitle("Cincuentazo - Menu");
         setResizable(false);
         show();
+
+        Image icono = new Image(getClass().getResourceAsStream("/com/example/minip3poe/images/icono_poker.png"));
+        getIcons().add(icono);
+
     }
 
 

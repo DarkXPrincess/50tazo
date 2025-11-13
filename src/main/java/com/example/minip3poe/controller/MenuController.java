@@ -23,6 +23,9 @@ public class MenuController {
     private TextField playerCountField;
 
     @FXML
+    private TextField jugador;
+
+    @FXML
     private Button playButton;
 
     @FXML
@@ -43,6 +46,15 @@ public class MenuController {
                 playerCountField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+
+        // Add validation for player name: only letters and spaces
+        if (jugador != null) {
+            jugador.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("[\\p{L} ]*")) {
+                    jugador.setText(newValue.replaceAll("[^\\p{L} ]", ""));
+                }
+            });
+        }
     }
 
     /**
@@ -52,6 +64,16 @@ public class MenuController {
     @FXML
     private void handlePlay() {
         try {
+            // Validate player name
+            String playerName = "TÚ";
+            if (jugador != null) {
+                String entered = jugador.getText().trim();
+                if (entered.isEmpty()) {
+                    showError("Invalid Input", "Por favor ingresa tu nombre.");
+                    return;
+                }
+                playerName = entered;
+            }
             // Parse machine count from text field
             String input = playerCountField.getText().trim();
 
@@ -65,6 +87,13 @@ public class MenuController {
             // Create and initialize game model
             GameModel gameModel = new GameModel();
             gameModel.initializeGame(machineCount);
+
+            // Set human player's name from input
+            if (playerName != null && !playerName.isEmpty()) {
+                if (gameModel.getHumanPlayer() != null) {
+                    gameModel.getHumanPlayer().setName(playerName);
+                }
+            }
 
             // Close menu stage and open game stage
             MenuStage.deleteInstance();
