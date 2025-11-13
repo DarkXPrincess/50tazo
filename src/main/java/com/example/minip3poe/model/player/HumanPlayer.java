@@ -42,7 +42,8 @@ public class HumanPlayer extends Player {
     @Override
     public Card selectCard(int currentTableSum) {
         Card cardToPlay = selectedCard;
-        selectedCard = null; // Reset for next turn
+        selectedCard = null;// Reset for next turn
+        hasPlayed = true;
         return cardToPlay;
     }
 

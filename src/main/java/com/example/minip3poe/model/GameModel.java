@@ -69,12 +69,12 @@ public class GameModel {
         deck = new Deck();
 
         // Create human player
-        HumanPlayer human = new HumanPlayer("Human Player");
+        HumanPlayer human = new HumanPlayer("TÚ");
         allPlayers.add(human);
 
         // Create machine players
         for (int i = 1; i <= machineCount; i++) {
-            MachinePlayer machine = new MachinePlayer("Machine " + i);
+            MachinePlayer machine = new MachinePlayer("Máquina" + i);
             allPlayers.add(machine);
         }
     }
@@ -135,6 +135,7 @@ public class GameModel {
 
         // Play the card
         currentPlayer.removeCard(card);
+        currentPlayer.setHasPlayed(true);
         deck.addToDiscardPile(card);
         tableSum += card.getGameValue(tableSum);
     }
@@ -167,10 +168,7 @@ public class GameModel {
             return;
         }
 
-        // Check if current player has valid cards
-        if (!currentPlayer.hasValidCard(tableSum)) {
-            eliminatePlayer(currentPlayer);
-        }
+
 
         // Move to next player in queue
         turnQueue.poll(); // Remove current player
@@ -210,7 +208,10 @@ public class GameModel {
         deck.addCardsToBottom(playerCards);
 
         // Remove from turn queue
-        turnQueue.remove(player);
+        //turnQueue.remove(player);
+        //check for game end
+        checkGameEnd();
+
     }
 
     /**

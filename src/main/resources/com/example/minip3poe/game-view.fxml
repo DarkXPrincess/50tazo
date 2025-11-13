@@ -19,7 +19,7 @@
 
 <AnchorPane prefHeight="535.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.minip3poe.controller.GameController">
    <children>
-      <ImageView fitHeight="575.0" fitWidth="747.0" layoutY="-26.0">
+      <ImageView fitHeight="549.0" fitWidth="754.0" layoutX="-7.0">
          <image>
             <Image url="@images/casino_background.jpg" />
          </image>
@@ -28,7 +28,7 @@
          <left>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandRight" fitHeight="301.0" fitWidth="228.0" layoutX="-28.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandRight" fitHeight="174.0" fitWidth="129.0" layoutX="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20right.png" />
                      </image>
@@ -39,7 +39,7 @@
          <right>
             <Pane prefHeight="194.0" prefWidth="190.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandLeft" fitHeight="301.0" fitWidth="271.0" layoutX="-38.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="machineHandLeft" fitHeight="173.0" fitWidth="136.0" layoutX="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@machine-hands/4%20cards%20blue%20facing%20left.png" />
                      </image>
@@ -78,16 +78,16 @@
             </Pane>
          </center>
          <top>
-            <AnchorPane prefHeight="136.0" prefWidth="735.0" BorderPane.alignment="CENTER">
+            <AnchorPane cacheShape="false" prefHeight="136.0" prefWidth="735.0" scaleShape="false" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="machineHandTop" fitHeight="195.0" fitWidth="174.0" layoutX="288.0" layoutY="-36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@machine-hands/4%20cards%20blue%20facing%20down.png" />
-                     </image>
-                  </ImageView>
                   <ImageView fx:id="exitImage" fitHeight="67.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icono_poker.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="machineHandTop" fitHeight="143.0" fitWidth="162.0" layoutX="282.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@machine-hands/4%20cards%20blue%20facing%20down.png" />
                      </image>
                   </ImageView>
                </children>

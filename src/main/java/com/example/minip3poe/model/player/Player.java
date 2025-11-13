@@ -16,6 +16,7 @@ public abstract class Player implements IPlayer {
     protected String name;
     protected List<Card> hand;
     protected boolean isEliminated;
+    protected boolean hasPlayed;
 
     /**
      * Creates a new player with the specified name.
@@ -42,11 +43,16 @@ public abstract class Player implements IPlayer {
 
     @Override
     public boolean hasValidCard(int currentTableSum) {
+        System.out.println("la variable hasPlayed para " + name + " es: " + hasPlayed);
+        System.out.println("Checking valid cards for player: " + name);
+
+        // Revisar todas las cartas de la mano: si alguna puede jugarse, devuelve true.
         for (Card card : hand) {
             if (card.canBePlayed(currentTableSum)) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -78,6 +84,12 @@ public abstract class Player implements IPlayer {
         return hand.size();
     }
 
+    public void setHasPlayed(boolean played) {
+        this.hasPlayed = played;
+    }
+    public boolean getHasPlayed() {
+        return hasPlayed;
+    }
     @Override
     public List<Card> clearHand() {
         List<Card> cards = new ArrayList<>(hand);

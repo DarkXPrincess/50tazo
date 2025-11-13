@@ -161,9 +161,11 @@ public class GameController {
         waitingForHumanDraw = false;
 
         HumanPlayer human = (HumanPlayer) gameModel.getCurrentPlayer();
+        human.setHasPlayed(false);
 
         // Verificar si tiene cartas válidas
-        if (!human.hasValidCard(gameModel.getTableSum())) {
+
+        if (!human.hasValidCard(gameModel.getTableSum()) && human.getHasPlayed()==false) {
             // ELIMINACIÓN: No tiene cartas válidas
             logMessage(human.getName() + " no tiene cartas válidas. ¡Has sido eliminado!");
 
@@ -171,10 +173,12 @@ public class GameController {
             gameModel.eliminatePlayer(human);
 
             // Pasar al siguiente turno
+
             gameModel.nextTurn();
             processTurn();
-            return;
-        }
+            return;}
+
+
         debugPrintAllHands();
         logMessage("Tu turno. Selecciona una carta para jugar.");
         updateUI();
@@ -189,19 +193,21 @@ public class GameController {
      */
     private void processMachineTurn(MachinePlayer machine) {
         isProcessingTurn = true;
+        machine.setHasPlayed(false);
+
 
         // Update turn label immediately
         turnLabel.setText(machine.getName());
 
         // Check if has valid cards (HU-5: Elimination)
-        if (!machine.hasValidCard(gameModel.getTableSum())) {
+        if (!machine.hasValidCard(gameModel.getTableSum()) && !machine.getHasPlayed()) {
             logMessage(machine.getName() + " no tiene cartas válidas. ¡Ha sido eliminado!");
             gameModel.eliminatePlayer(machine);
             gameModel.nextTurn();
             processTurn();
             return;
         }
-
+        System.out.println("\nDEBUG: " + machine.getName() + "tiene cartas validas?" + machine.hasValidCard(gameModel.getTableSum()));
         logMessage(machine.getName() + " está pensando...");
 
         // Create and start thinking task
@@ -252,6 +258,7 @@ public class GameController {
         try {
             // Play the card
             gameModel.playCard(card);
+            human.setHasPlayed(false);
             logMessage("Jugaste: " + card + ". Ahora roba una carta del mazo."); // ← MENSAJE ACTUALIZADO
             updateUI();
 
@@ -370,7 +377,7 @@ public class GameController {
     private void loadCardImage(ImageView imageView, Card card) {
         try {
             String imagePath = "/com/example/minip3poe/cartas-poker/" + card.getImageName();
-            System.out.println("Intentando cargar: " + imagePath);
+
 
             // Método alternativo usando URL
             java.net.URL imageUrl = getClass().getResource(imagePath);
@@ -391,7 +398,7 @@ public class GameController {
 
             Image image = new Image(imageUrl.toExternalForm());
             imageView.setImage(image);
-            System.out.println("✓ Imagen cargada exitosamente!");
+
 
         } catch (Exception e) {
             System.err.println("Failed to load card image: " + card.getImageName());
