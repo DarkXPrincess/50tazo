@@ -64,6 +64,7 @@ public class GameController {
     private GameModel gameModel;
     private boolean isProcessingTurn = false;
     private boolean waitingForHumanDraw = false;
+    private int logCounter = 1;
 
     /**
      * Initializes the controller.
@@ -414,8 +415,8 @@ public class GameController {
      */
     private void logMessage(String message) {
         Platform.runLater(() -> {
-            commTextArea.appendText(message+"\n");
-            commTextArea.setScrollTop(Double.MAX_VALUE);
+            commTextArea.appendText("\n" + String.valueOf(logCounter) + ": "  + message);
+            logCounter++;
         });
     }
 
