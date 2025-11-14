@@ -14,7 +14,9 @@ import java.util.function.Consumer;
  * before selecting and playing a card.
  * Implements HU-3: Machine player card selection with delay.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class MachineThinkingTask extends Task<Void> {

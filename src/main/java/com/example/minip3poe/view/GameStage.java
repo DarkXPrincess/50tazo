@@ -13,7 +13,9 @@ import java.io.IOException;
  * A singleton Stage for the main game window.
  * This class ensures that only one instance of the game window can exist.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class GameStage extends Stage {

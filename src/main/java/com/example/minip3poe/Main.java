@@ -10,7 +10,9 @@ import java.io.IOException;
  * Main application class for Cincuentazo game.
  * Entry point for the JavaFX application.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class Main extends Application {

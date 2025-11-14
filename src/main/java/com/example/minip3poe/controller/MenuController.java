@@ -14,7 +14,9 @@ import javafx.scene.control.TextField;
  * Handles machine player count input and game initialization.
  * Implements HU-1: Inicio del juego
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class MenuController {

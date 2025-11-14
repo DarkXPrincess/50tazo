@@ -30,7 +30,9 @@ import java.io.IOException;
  * Handles game flow, turn management, card plays, and UI updates.
  * Implements HU-2 through HU-6.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class GameController {

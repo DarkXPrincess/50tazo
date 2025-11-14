@@ -12,7 +12,9 @@ import java.util.function.Consumer;
  * after playing a card.
  * Implements HU-4: Machine player drawing card with delay.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class MachineDrawingTask extends Thread {

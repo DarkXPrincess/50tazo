@@ -6,7 +6,9 @@ package com.example.minip3poe.model.exceptions;
  *
  * This is a RuntimeException, so it does not need to be explicitly caught.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class NoValidCardException extends RuntimeException {

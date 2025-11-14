@@ -4,7 +4,9 @@ package com.example.minip3poe.model;
  * Represents a playing card in the Cincuentazo game.
  * Each card has a rank, suit, and a value that affects the table sum.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class Card {

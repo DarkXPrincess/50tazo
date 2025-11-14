@@ -20,7 +20,9 @@ import java.util.Queue;
  * - ArrayList: for player hands (in Player class)
  * - Queue: for managing turn order
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class GameModel {

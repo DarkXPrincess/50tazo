@@ -13,7 +13,9 @@ import javafx.scene.image.Image;
  * A singleton Stage for the main menu window.
  * This class ensures that only one instance of the menu window can exist.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class MenuStage extends Stage {

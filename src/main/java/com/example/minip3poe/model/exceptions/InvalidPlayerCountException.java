@@ -4,7 +4,9 @@ package com.example.minip3poe.model.exceptions;
  * Checked exception thrown when an invalid number of machine players is selected.
  * Valid range: 1 to 3 machine players.
  *
- * @author [Tu nombre]
+ * @author Juan David Salazar
+ * @author Veronica Granados
+ * @author Freddy Alexander Melo Buitrago
  * @version 1.0
  */
 public class InvalidPlayerCountException extends Exception {
