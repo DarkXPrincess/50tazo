@@ -1,0 +1,17 @@
+com\example\minip3poe\model\GameModelTest$GameStartTests.class
+com\example\minip3poe\model\DeckTest$EdgeCasesTests.class
+com\example\minip3poe\model\DeckTest$DiscardPileTests.class
+com\example\minip3poe\model\GameModelTest$CardDrawTests.class
+com\example\minip3poe\model\DeckTest$ReshuffleTests.class
+com\example\minip3poe\model\GameModelTest$GameEndTests.class
+com\example\minip3poe\model\DeckTest$ShuffleTests.class
+com\example\minip3poe\model\GameModelTest.class
+com\example\minip3poe\model\DeckTest$DeckInitializationTests.class
+com\example\minip3poe\model\DeckTest$AddCardsToBottomTests.class
+com\example\minip3poe\model\GameModelTest$GameStateTests.class
+com\example\minip3poe\model\CardTest.class
+com\example\minip3poe\model\DeckTest.class
+com\example\minip3poe\model\DeckTest$CardDrawTests.class
+com\example\minip3poe\model\GameModelTest$GameInitializationTests.class
+com\example\minip3poe\model\GameModelTest$PlayerEliminationTests.class
+com\example\minip3poe\model\GameModelTest$CardPlayTests.class

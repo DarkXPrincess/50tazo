@@ -1,0 +1,4 @@
+--patch-module
+com.example.minip3poe=_
+--add-reads
+com.example.minip3poe=ALL-UNNAMED
